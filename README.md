@@ -33,7 +33,7 @@ $ npm install
 
 ## Database setup
 
-Create a `.env` file based on `.env.example` with your Supabase credentials. Then run:
+Create a `.env` file based on `.env.example` with your Supabase credentials and a `JWT_SECRET`. Then run:
 
 ```bash
 $ npx prisma generate        # optional if the client is not generated

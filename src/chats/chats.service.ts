@@ -11,14 +11,13 @@ export class ChatsService {
   ) {}
 
   async createChat(username: string, currentUser: string): Promise<Chat> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const other = await this.prisma.user.findUnique({
       where: { username },
     });
     if (!other) {
       throw new BadRequestException('User not found');
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+
     const existing = await this.prisma.chat.findFirst({
       where: {
         participants: {
@@ -32,11 +31,11 @@ export class ChatsService {
       },
       include: { participants: true },
     });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
     if (existing && existing.participants.length === 2) {
       throw new BadRequestException('Chat already exists');
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+
     const chat = await this.prisma.chat.create({
       data: {
         participants: {
@@ -50,7 +49,6 @@ export class ChatsService {
   }
 
   async getChats(currentUser: string): Promise<Chat[]> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
     return await this.prisma.chat.findMany({
       where: {
         participants: { some: { username: currentUser } },

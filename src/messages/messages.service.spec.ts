@@ -31,9 +31,8 @@ describe('MessagesService', () => {
   });
 
   it('sendMessage sends when chat exists', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.chat.findFirst as jest.Mock).mockResolvedValue({ id: '1' });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
     (prisma.message.create as jest.Mock).mockResolvedValue({
       id: 'm1',
       chatId: '1',
@@ -46,7 +45,6 @@ describe('MessagesService', () => {
   });
 
   it('sendMessage throws when chat missing', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.chat.findFirst as jest.Mock).mockResolvedValue(null);
     await expect(
       service.sendMessage({ chatId: '2', text: 'hi' }, 'alice'),

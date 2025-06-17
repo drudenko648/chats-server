@@ -5,7 +5,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+
 interface Message {
   chatId: string;
 }
@@ -32,7 +32,6 @@ export class ChatGateway {
   }
 
   newMessage(message: Message): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
     this.server.to(message.chatId).emit('newMessage', message);
   }
 

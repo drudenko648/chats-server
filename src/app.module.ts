@@ -10,6 +10,7 @@ import { ChatsModule } from './chats/chats.module';
 import { MessagesModule } from './messages/messages.module';
 import { SocketModule } from './socket/socket.module';
 import { join } from 'node:path';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import { join } from 'node:path';
     MessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

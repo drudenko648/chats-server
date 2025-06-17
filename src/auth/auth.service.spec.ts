@@ -41,14 +41,12 @@ describe('AuthService', () => {
       service.signUp({ username: 'a', password: 'b' }),
     ).resolves.toEqual({ accessToken: 'token' });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { username: 'a', password: 'hashed' },
     });
   });
 
   it('signIn should return token with valid credentials', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',
@@ -60,7 +58,6 @@ describe('AuthService', () => {
   });
 
   it('signIn should throw with invalid credentials', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',

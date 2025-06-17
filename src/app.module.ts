@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       graphiql: true,
       autoSchemaFile: true,
     }),
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

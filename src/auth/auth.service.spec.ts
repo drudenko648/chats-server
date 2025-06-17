@@ -15,10 +15,12 @@ describe('AuthService', () => {
   } as unknown as JwtService;
 
   beforeEach(async () => {
+    const create = jest.fn();
+    const findUnique = jest.fn();
     prisma = {
       user: {
-        create: jest.fn(),
-        findUnique: jest.fn(),
+        create,
+        findUnique,
       },
     } as unknown as PrismaService;
 
@@ -38,12 +40,15 @@ describe('AuthService', () => {
     await expect(
       service.signUp({ username: 'a', password: 'b' }),
     ).resolves.toEqual({ accessToken: 'token' });
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { username: 'a', password: 'hashed' },
     });
   });
 
   it('signIn should return token with valid credentials', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',
@@ -55,6 +60,7 @@ describe('AuthService', () => {
   });
 
   it('signIn should throw with invalid credentials', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',

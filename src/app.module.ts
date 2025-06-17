@@ -5,8 +5,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ChatsModule } from './chats/chats.module';
+import { MessagesModule } from './messages/messages.module';
+import { SocketModule } from './socket/socket.module';
 import { join } from 'node:path';
-import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -17,8 +20,12 @@ import { AppResolver } from './app.resolver';
     }),
     PrismaModule,
     AuthModule,
+    SocketModule,
+    UsersModule,
+    ChatsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppResolver],
+  providers: [AppService],
 })
 export class AppModule {}

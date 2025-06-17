@@ -31,6 +31,16 @@
 $ npm install
 ```
 
+## Database setup
+
+Create a `.env` file based on `.env.example` with your Supabase credentials. Then run:
+
+```bash
+$ npx prisma generate        # optional if the client is not generated
+$ npx prisma migrate deploy  # apply migrations to the database
+$ npm run db:seed            # seed test users
+```
+
 ## Compile and run the project
 
 ```bash

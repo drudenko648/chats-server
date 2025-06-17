@@ -9,20 +9,21 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  username  String    @unique
+  id        String     @id @default(uuid())
+  username  String     @unique
   password  String
-  chats     Chat[]    @relation("ChatParticipants")
+  chats     Chat[]     @relation("ChatParticipants")
   messages  Message[]
   seenChats SeenChat[]
 }
 
 model Chat {
-  id           String      @id @default(uuid())
+  id           String     @id @default(uuid())
   title        String?
-  participants User[]      @relation("ChatParticipants")
+  participants User[]     @relation("ChatParticipants")
   messages     Message[]
-  createdAt    DateTime    @default(now())
+  createdAt    DateTime   @default(now())
+  SeenChat     SeenChat[]
 }
 
 model Message {
@@ -40,8 +41,8 @@ model SeenChat {
   userId String
   chatId String
   seenAt DateTime
-  user   User    @relation(fields: [userId], references: [id])
-  chat   Chat    @relation(fields: [chatId], references: [id])
+  user   User     @relation(fields: [userId], references: [id])
+  chat   Chat     @relation(fields: [chatId], references: [id])
 
   @@unique([userId, chatId])
 }

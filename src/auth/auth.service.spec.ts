@@ -44,7 +44,7 @@ describe('AuthService', () => {
   });
 
   it('signIn should return token with valid credentials', async () => {
-    prisma.user.findUnique.mockResolvedValue({
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',
     });
@@ -55,7 +55,7 @@ describe('AuthService', () => {
   });
 
   it('signIn should throw with invalid credentials', async () => {
-    prisma.user.findUnique.mockResolvedValue({
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       username: 'a',
       password: 'hashed',
     });

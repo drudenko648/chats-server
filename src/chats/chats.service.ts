@@ -49,7 +49,7 @@ export class ChatsService {
   }
 
   async getChats(currentUser: string): Promise<Chat[]> {
-    return await this.prisma.chat.findMany({
+    return this.prisma.chat.findMany({
       where: {
         participants: { some: { username: currentUser } },
       },

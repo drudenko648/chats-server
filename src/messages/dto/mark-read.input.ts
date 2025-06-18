@@ -6,7 +6,9 @@ export class MarkReadInput {
   @Field(() => ID)
   chatId!: string;
 
-  @Field()
+  @Field({
+    description: 'ISO8601 date string',
+  })
   @IsISO8601()
   seenAt!: Date;
 }

@@ -3,7 +3,7 @@ import { UseGuards } from '@nestjs/common';
 import { ChatsService } from './chats.service';
 import { CreateChatInput } from './dto/create-chat.input';
 import { ChatSummary } from './dto/chat-summary.object';
-import { GqlAuthGuard } from '../common/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '../common/guards/gql-jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @Resolver()
@@ -11,7 +11,7 @@ export class ChatsResolver {
   constructor(private chats: ChatsService) {}
 
   @Mutation(() => ChatSummary)
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlJwtAuthGuard)
   createChat(
     @Args('input') input: CreateChatInput,
     @CurrentUser() user: { username: string },
@@ -20,7 +20,7 @@ export class ChatsResolver {
   }
 
   @Query(() => [ChatSummary])
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlJwtAuthGuard)
   getChats(@CurrentUser() user: { username: string }) {
     return this.chats.getChats(user.username);
   }

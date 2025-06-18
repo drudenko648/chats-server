@@ -4,7 +4,7 @@ import { MessagesService } from './messages.service';
 import { SendMessageInput } from './dto/send-message.input';
 import { Message } from './dto/message.object';
 import { LoadMessagesArgs } from './dto/load-messages.args';
-import { GqlAuthGuard } from '../common/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '../common/guards/gql-jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { MarkReadInput } from './dto/mark-read.input';
 
@@ -13,7 +13,7 @@ export class MessagesResolver {
   constructor(private messages: MessagesService) {}
 
   @Mutation(() => Message)
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlJwtAuthGuard)
   sendMessage(
     @Args('input') input: SendMessageInput,
     @CurrentUser() user: { username: string },
@@ -22,13 +22,13 @@ export class MessagesResolver {
   }
 
   @Query(() => [Message])
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlJwtAuthGuard)
   loadMessages(@Args() args: LoadMessagesArgs) {
     return this.messages.loadMessages(args);
   }
 
   @Mutation(() => Boolean)
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlJwtAuthGuard)
   markChatRead(
     @Args('input') input: MarkReadInput,
     @CurrentUser() user: { username: string },

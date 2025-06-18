@@ -1,0 +1,92 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthPayload {
+  accessToken: String!
+}
+
+type UserSummary {
+  username: String!
+}
+
+type Message {
+  id: ID!
+  chatId: String!
+  sender: UserSummary!
+  text: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ChatSummary {
+  id: String!
+  title: String
+  createdAt: DateTime!
+  participants: [UserSummary!]!
+}
+
+type Query {
+  sayHello: String!
+  searchUsers(username: String!): [UserSummary!]!
+  getChats: [ChatSummary!]!
+  loadMessages(
+    chatId: ID!
+
+    """Id of the message that will be used as cursor for pagination"""
+    cursor: ID
+
+    """Message loading direction. ASC newer, DESC older"""
+    direction: MessageDirection
+  ): [Message!]!
+}
+
+enum MessageDirection {
+  ASC
+  DESC
+}
+
+type Mutation {
+  signUp(input: SignUpInput!): AuthPayload!
+  signIn(input: SignInInput!): AuthPayload!
+  createChat(input: CreateChatInput!): ChatSummary!
+  sendMessage(input: SendMessageInput!): Message!
+  markChatRead(input: MarkReadInput!): Boolean!
+}
+
+input SignUpInput {
+  """Should be non-empty alphanumeric string"""
+  username: String!
+
+  """Should be string longer than 6 characters"""
+  password: String!
+}
+
+input SignInInput {
+  """Should be non-empty alphanumeric string"""
+  username: String!
+
+  """Should be string longer than 6 characters"""
+  password: String!
+}
+
+input CreateChatInput {
+  """Should be non-empty alphanumeric string"""
+  username: String!
+}
+
+input SendMessageInput {
+  chatId: ID!
+  text: String!
+}
+
+input MarkReadInput {
+  chatId: ID!
+
+  """ISO8601 date string"""
+  seenAt: DateTime!
+}

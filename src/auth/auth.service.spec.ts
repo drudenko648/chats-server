@@ -15,10 +15,12 @@ describe('AuthService', () => {
   } as unknown as JwtService;
 
   beforeEach(async () => {
+    const create = jest.fn();
+    const findUnique = jest.fn();
     prisma = {
       user: {
-        create: jest.fn(),
-        findUnique: jest.fn(),
+        create,
+        findUnique,
       },
     } as unknown as PrismaService;
 
@@ -38,6 +40,7 @@ describe('AuthService', () => {
     await expect(
       service.signUp({ username: 'a', password: 'b' }),
     ).resolves.toEqual({ accessToken: 'token' });
+
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { username: 'a', password: 'hashed' },
     });
